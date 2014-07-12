@@ -47,6 +47,8 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\InvalidArgumentException');
 
         $this->paginator->setItemsPerPage(45.8);
+
+        $this->assertNotNull($this->paginator->getItemsPerPage());
     }
 
     public function testSetItemsPerPage()
@@ -54,5 +56,21 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->paginator->setItemsPerPage(45);
 
         $this->assertEquals(45, $this->paginator->getItemsPerPage());
+    }
+
+    public function testSetPagesInRangeFail()
+    {
+        $this->setExpectedException('\InvalidArgumentException');
+
+        $this->paginator->setPagesInRange(23.7);
+
+        $this->assertNotNull($this->paginator->getPagesInRange());
+    }
+
+    public function testSetPagesInRange()
+    {
+        $this->paginator->setPagesInRange(23);
+
+        $this->assertEquals(23, $this->paginator->getPagesInRange());
     }
 }
