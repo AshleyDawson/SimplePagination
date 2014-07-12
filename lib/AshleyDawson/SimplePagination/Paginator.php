@@ -33,6 +33,28 @@ class Paginator implements PaginatorInterface
     /**
      * {@inheritdoc}
      */
+    public function paginate($currentPageNumber = 1)
+    {
+        if (!is_int($currentPageNumber)) {
+            throw new \InvalidArgumentException(
+                sprintf('Current page number must be of type integer, %s given', gettype($currentPageNumber)));
+        }
+
+        // todo: replace this exception with a specialised one
+        if ($currentPageNumber < 1) {
+            throw new \InvalidArgumentException(
+                sprintf('Current page number must have a value of 1 or more, %s given', $currentPageNumber));
+        }
+
+        // todo: complete algorithm
+
+        // todo: check that callbacks return an iterable collection (e.g. array, \ArrayIterator, etc.)
+        // todo: maybe check that the count callback implements \Countable only?
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getSliceCallback()
     {
         return $this->sliceCallback;
