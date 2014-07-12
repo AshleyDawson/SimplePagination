@@ -8,7 +8,7 @@ namespace AshleyDawson\SimplePagination;
  * @package AshleyDawson\SimplePagination
  * @author Ashley Dawson <ashley@ashleydawson.co.uk>
  */
-class Paginator
+class Paginator implements PaginatorInterface
 {
     /**
      * @var \Closure
@@ -31,9 +31,7 @@ class Paginator
     private $pagesInRange = 5;
 
     /**
-     * Get sliceCallback
-     *
-     * @return callable
+     * {@inheritdoc}
      */
     public function getSliceCallback()
     {
@@ -41,10 +39,7 @@ class Paginator
     }
 
     /**
-     * Set sliceCallback
-     *
-     * @param callable $sliceCallback
-     * @return $this
+     * {@inheritdoc}
      */
     public function setSliceCallback(\Closure $sliceCallback)
     {
@@ -53,9 +48,7 @@ class Paginator
     }
 
     /**
-     * Get itemTotalCallback
-     *
-     * @return callable
+     * {@inheritdoc}
      */
     public function getItemTotalCallback()
     {
@@ -63,10 +56,7 @@ class Paginator
     }
 
     /**
-     * Set itemTotalCallback
-     *
-     * @param callable $itemTotalCallback
-     * @return $this
+     * {@inheritdoc}
      */
     public function setItemTotalCallback($itemTotalCallback)
     {
@@ -75,9 +65,7 @@ class Paginator
     }
 
     /**
-     * Get itemsPerPage
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getItemsPerPage()
     {
@@ -85,10 +73,7 @@ class Paginator
     }
 
     /**
-     * Set itemsPerPage
-     *
-     * @param int $itemsPerPage
-     * @return $this
+     * {@inheritdoc}
      */
     public function setItemsPerPage($itemsPerPage)
     {
@@ -97,9 +82,7 @@ class Paginator
     }
 
     /**
-     * Get pagesInRange
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getPagesInRange()
     {
@@ -107,10 +90,7 @@ class Paginator
     }
 
     /**
-     * Set pagesInRange
-     *
-     * @param int $pagesInRange
-     * @return $this
+     * {@inheritdoc}
      */
     public function setPagesInRange($pagesInRange)
     {
