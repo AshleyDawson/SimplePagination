@@ -77,6 +77,11 @@ class Paginator implements PaginatorInterface
      */
     public function setItemsPerPage($itemsPerPage)
     {
+        if (!is_int($itemsPerPage)) {
+            throw new \InvalidArgumentException(
+                sprintf('Items per page must be of type integer, %s given', gettype($itemsPerPage)));
+        }
+
         $this->itemsPerPage = $itemsPerPage;
         return $this;
     }
@@ -94,6 +99,11 @@ class Paginator implements PaginatorInterface
      */
     public function setPagesInRange($pagesInRange)
     {
+        if (!is_int($pagesInRange)) {
+            throw new \InvalidArgumentException(
+                sprintf('Pages in range must be of type integer, %s given', gettype($pagesInRange)));
+        }
+
         $this->pagesInRange = $pagesInRange;
         return $this;
     }

@@ -52,6 +52,7 @@ interface PaginatorInterface
      *
      * @param int $itemsPerPage
      * @return $this
+     * @throws \InvalidArgumentException
      */
     public function setItemsPerPage($itemsPerPage);
 
@@ -67,6 +68,7 @@ interface PaginatorInterface
      *
      * @param int $pagesInRange
      * @return $this
+     * @throws \InvalidArgumentException
      */
     public function setPagesInRange($pagesInRange);
 }
