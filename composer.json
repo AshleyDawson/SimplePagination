@@ -1,0 +1,26 @@
+{
+    "name": "ashleydawson/simplepagination",
+    "type": "library",
+    "description": "Simple pagination library implements a paging interface on collections of things",
+    "keywords": ["pagination", "pager", "simple"],
+    "authors": [
+        {
+            "name": "Ashley Dawson",
+            "email": "ashley@ashleydawson.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.24"
+    },
+    "require-dev": {
+        "phpunit/phpunit-mock-objects": "2.3.*@dev",
+        "phpunit/php-code-coverage": "3.0.*@dev",
+        "phpunit/phpunit": "4.3.*@dev"
+    },
+    "autoload": {
+        "psr-0": { "AshleyDawson\\SimplePagination\\": "lib/" }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
