@@ -27,10 +27,10 @@ How Simple Pagination Works
 I've tried to make Simple Pagination as easy to use and as flexible as possible. There are four main elements that
 describe the operation of Simple Pagination. These are:
 
-1. Paginator service
-2. Item total callback
-3. Slice callback
-4. Pagination model
+* Paginator service
+* Item total callback
+* Slice callback
+* Pagination model
 
 The **Paginator** service performs the pagination algorithm, generating the page range and item collection slices.
 When it's done it will return a **Pagination** model filled with the item collection slice and meta information.
@@ -169,3 +169,45 @@ foreach ($pagination->getPages() as $page) {
 
 It really doesn't matter what sort of collection you return from the Paginator::setSliceCallback() callback. It will
 always end up in Pagination::getItems().
+
+Pagination Model
+----------------
+
+The result of the Paginator::paginate() operation is to produce a Pagination model object, which carries the item collection for 
+the current page plus the meta information for the collection, e.g. pages array, next page number, previous page number, etc.
+Please see below for a list of properties that the Pagination object has.
+
+* items:mixed
+* pages:array
+* totalNumberOfPages:int
+* currentPageNumber:int
+* firstPageNumber:int
+* lastPageNumber:int
+* previousPageNumber:int
+* nextPageNumber:int
+* itemsPerPage:int
+* totalNumberOfItems:int
+* firstPageNumberInRange:int
+* lastPageNumberInRange:int
+
+A good example of using the Pagination object is to build a simple pagination navigation structure:
+
+```php
+// Render the first page link
+echo '<a href="?page=' . $pagination->getFirstPageNumber() . '">First Page</a> ';
+
+// Render the previous page link (note: the previous page number could be null)
+echo '<a href="?page=' . $pagination->getPreviousPageNumber() . '">Previous Page</a> ';
+
+// Render page range links
+foreach ($pagination->getPages() as $page) {
+    echo '<a href="?page=' . $page . '">' . $page . '</a> ';
+}
+
+// Render the next page link (note: the next page number could be null)
+echo '<a href="?page=' . $pagination->getNextPageNumber() . '">Next Page</a> ';
+
+// Render the last page link
+echo '<a href="?page=' . $pagination->getLastPageNumber() . '">Last Page</a>';
+```
+
