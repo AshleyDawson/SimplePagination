@@ -1,8 +1,8 @@
 {
     "name": "ashleydawson/simplepagination",
     "type": "library",
-    "description": "Simple pagination library implements a paging interface on collections of things",
-    "keywords": ["pagination", "pager", "simple"],
+    "description": "Simple and universal pagination library implements a paging interface on collections of things",
+    "keywords": ["pagination", "paginator", "pager", "simple", "easy", "flexible", "universal"],
     "authors": [
         {
             "name": "Ashley Dawson",
