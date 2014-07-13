@@ -76,11 +76,34 @@ class Paginator implements PaginatorInterface
         $sliceCallback = $this->sliceCallback;
         $items = $sliceCallback($offset, $this->itemsPerPage);
 
-        // todo: finish algorithm
+        $previousPageNumber = null;
+        if ($currentPageNumber - 1 > 0) {
+            $previousPageNumber = $currentPageNumber - 1;
+        }
 
-        // todo: check that callbacks return an iterable collection (e.g. array, \ArrayIterator, etc.)
+        $nextPageNumber = null;
+        if ($currentPageNumber + 1 <= $numberOfPages) {
+            $nextPageNumber = $currentPageNumber + 1;
+        }
 
-        // todo: write a class to represent the result set
+        $pagination = new Pagination();
+
+        $pagination
+            ->setItems($items)
+            ->setPages($pages)
+            ->setTotalNumberOfPages($numberOfPages)
+            ->setCurrentPageNumber($currentPageNumber)
+            ->setFirstPageNumber(1)
+            ->setLastPageNumber($numberOfPages)
+            ->setPreviousPageNumber($previousPageNumber)
+            ->setNextPageNumber($nextPageNumber)
+            ->setItemsPerPage($this->itemsPerPage)
+            ->setTotalNumberOfItems($totalNumberOfItems)
+            ->setFirstPageNumberInRange(min($pages))
+            ->setLastPageNumberInRange(max($pages))
+        ;
+
+        return $pagination;
     }
 
     /**
