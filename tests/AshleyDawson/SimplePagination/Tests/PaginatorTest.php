@@ -88,9 +88,11 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->paginator->paginate(0);
     }
 
-    public function testPaginate()
+    public function testPaginateLowVolume()
     {
         $items = range(0, 27);
+
+        $this->paginator->setItemsPerPage(10)->setPagesInRange(5);
 
         $this->paginator->setItemTotalCallback(function () use ($items) {
             return count($items);
@@ -179,5 +181,102 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $pagination->getFirstPageNumberInRange());
 
         $this->assertEquals(3, $pagination->getLastPageNumberInRange());
+    }
+
+    public function testPaginateHighVolume()
+    {
+        // CAUTION: This test consumes a large amount of memory (~50Mb)
+
+        $items = range(0, 293832);
+
+        $this->paginator->setItemsPerPage(10)->setPagesInRange(5);
+
+        $this->paginator->setItemTotalCallback(function () use ($items) {
+            return count($items);
+        });
+
+        $this->paginator->setSliceCallback(function ($offset, $length) use ($items) {
+            return array_slice($items, $offset, $length);
+        });
+
+        $pagination = $this->paginator->paginate(1);
+
+        $this->assertCount(10, $pagination->getItems());
+
+        $this->assertCount(5, $pagination->getPages());
+
+        $this->assertEquals(29384, $pagination->getTotalNumberOfPages());
+
+        $this->assertEquals(1, $pagination->getCurrentPageNumber());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumber());
+
+        $this->assertEquals(29384, $pagination->getLastPageNumber());
+
+        $this->assertNull($pagination->getPreviousPageNumber());
+
+        $this->assertEquals(2, $pagination->getNextPageNumber());
+
+        $this->assertEquals(10, $pagination->getItemsPerPage());
+
+        $this->assertEquals(293833, $pagination->getTotalNumberOfItems());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumberInRange());
+
+        $this->assertEquals(5, $pagination->getLastPageNumberInRange());
+
+        // Move to random page
+        $pagination = $this->paginator->paginate(4573);
+
+        $this->assertCount(10, $pagination->getItems());
+
+        $this->assertCount(5, $pagination->getPages());
+
+        $this->assertEquals(29384, $pagination->getTotalNumberOfPages());
+
+        $this->assertEquals(4573, $pagination->getCurrentPageNumber());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumber());
+
+        $this->assertEquals(29384, $pagination->getLastPageNumber());
+
+        $this->assertEquals(4572, $pagination->getPreviousPageNumber());
+
+        $this->assertEquals(4574, $pagination->getNextPageNumber());
+
+        $this->assertEquals(10, $pagination->getItemsPerPage());
+
+        $this->assertEquals(293833, $pagination->getTotalNumberOfItems());
+
+        $this->assertEquals(4571, $pagination->getFirstPageNumberInRange());
+
+        $this->assertEquals(4575, $pagination->getLastPageNumberInRange());
+
+        // Move to last page
+        $pagination = $this->paginator->paginate(29384);
+
+        $this->assertCount(3, $pagination->getItems());
+
+        $this->assertCount(5, $pagination->getPages());
+
+        $this->assertEquals(29384, $pagination->getTotalNumberOfPages());
+
+        $this->assertEquals(29384, $pagination->getCurrentPageNumber());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumber());
+
+        $this->assertEquals(29384, $pagination->getLastPageNumber());
+
+        $this->assertEquals(29383, $pagination->getPreviousPageNumber());
+
+        $this->assertNull($pagination->getNextPageNumber());
+
+        $this->assertEquals(10, $pagination->getItemsPerPage());
+
+        $this->assertEquals(293833, $pagination->getTotalNumberOfItems());
+
+        $this->assertEquals(29380, $pagination->getFirstPageNumberInRange());
+
+        $this->assertEquals(29384, $pagination->getLastPageNumberInRange());
     }
 }
