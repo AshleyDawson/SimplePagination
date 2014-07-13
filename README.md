@@ -52,7 +52,7 @@ Basic Usage
 Ok, lets go with the most basic example - paginating over an array.
 
 ```php
-use AshleyDawson\SimplePagination;
+use AshleyDawson\SimplePagination\Paginator;
 
 // Build a mock list of items we want to paginate through
 $items = array(
@@ -114,7 +114,7 @@ MySQL Example
 Let's take the example above and use a MySQL result set instead of an array.
 
 ```php
-use AshleyDawson\SimplePagination;
+use AshleyDawson\SimplePagination\Paginator;
 
 // Instantiate a new paginator service
 $paginator = new Paginator();
