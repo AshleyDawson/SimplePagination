@@ -71,14 +71,16 @@ class Paginator implements PaginatorInterface
             $pages = range($offset + 1, $offset + $pagesInRange);
         }
 
-        $limit = ($currentPageNumber - 1) * $this->itemsPerPage;
+        $offset = ($currentPageNumber - 1) * $this->itemsPerPage;
 
         $sliceCallback = $this->sliceCallback;
-        $items = $sliceCallback($limit, $this->itemsPerPage);
+        $items = $sliceCallback($offset, $this->itemsPerPage);
 
         // todo: finish algorithm
 
         // todo: check that callbacks return an iterable collection (e.g. array, \ArrayIterator, etc.)
+
+        // todo: write a class to represent the result set
     }
 
     /**

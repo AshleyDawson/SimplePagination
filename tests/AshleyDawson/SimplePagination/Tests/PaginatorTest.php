@@ -87,4 +87,9 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
 
         $this->paginator->paginate(0);
     }
+
+    public function testPaginate()
+    {
+        // todo: finish this test
+    }
 }
