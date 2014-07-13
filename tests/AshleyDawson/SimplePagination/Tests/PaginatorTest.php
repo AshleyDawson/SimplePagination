@@ -78,12 +78,16 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\InvalidArgumentException');
 
+        $this->setExpectedException('AshleyDawson\SimplePagination\Exception\CallbackNotFoundException');
+
         $this->paginator->paginate('1');
     }
 
     public function testPaginateFailZeroPageNumber()
     {
         $this->setExpectedException('AshleyDawson\SimplePagination\Exception\InvalidPageNumberException');
+
+        $this->setExpectedException('AshleyDawson\SimplePagination\Exception\CallbackNotFoundException');
 
         $this->paginator->paginate(0);
     }

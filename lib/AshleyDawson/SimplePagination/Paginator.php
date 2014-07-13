@@ -2,6 +2,7 @@
 
 namespace AshleyDawson\SimplePagination;
 
+use AshleyDawson\SimplePagination\Exception\CallbackNotFoundException;
 use AshleyDawson\SimplePagination\Exception\InvalidPageNumberException;
 
 /**
@@ -37,6 +38,16 @@ class Paginator implements PaginatorInterface
      */
     public function paginate($currentPageNumber = 1)
     {
+        if (!($this->itemTotalCallback instanceof \Closure)) {
+            throw new CallbackNotFoundException(
+                'Item total callback not found, set it using Paginator::setItemTotalCallback()');
+        }
+
+        if (!($this->sliceCallback instanceof \Closure)) {
+            throw new CallbackNotFoundException(
+                'Slice callback not found, set it using Paginator::setSliceCallback()');
+        }
+
         if (!is_int($currentPageNumber)) {
             throw new \InvalidArgumentException(
                 sprintf('Current page number must be of type integer, %s given', gettype($currentPageNumber)));
