@@ -43,7 +43,7 @@ used to determine the total number of items in your collection (returned as an i
 The idea behind using these callbacks is so that Simple Pagination is kept, well, simple! The real power comes with
 the flexibility. You can use Simple Pagination with just about any collection you want. From simple arrays to database
 lists to [Doctrine](http://www.doctrine-project.org/) collections to [Solr](http://lucene.apache.org/solr/) result 
-sets - we're got you covered! It really doesn't matter what we slice - as long as it's a collection of things and you 
+sets - we're got you covered! It really doesn't matter what we paginate - as long as it's a collection of things and you 
 can count and slice it.
 
 Basic Usage
