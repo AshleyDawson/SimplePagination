@@ -48,7 +48,7 @@ interface PaginatorInterface
      * @param callable $itemTotalCallback
      * @return $this
      */
-    public function setItemTotalCallback($itemTotalCallback);
+    public function setItemTotalCallback(\Closure $itemTotalCallback);
 
     /**
      * Get itemsPerPage

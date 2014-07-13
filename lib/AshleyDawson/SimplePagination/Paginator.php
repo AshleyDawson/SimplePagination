@@ -111,7 +111,7 @@ class Paginator implements PaginatorInterface
     /**
      * {@inheritdoc}
      */
-    public function setItemTotalCallback($itemTotalCallback)
+    public function setItemTotalCallback(\Closure $itemTotalCallback)
     {
         $this->itemTotalCallback = $itemTotalCallback;
         return $this;
