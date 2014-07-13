@@ -14,7 +14,7 @@ package in your `composer.json` file like so:
 ```json
 {
     "require": {
-        "ashleydawson/simplepagination": "1.0.*"
+        "ashleydawson/simple-pagination": "1.0.*"
     }
 }
 ```
