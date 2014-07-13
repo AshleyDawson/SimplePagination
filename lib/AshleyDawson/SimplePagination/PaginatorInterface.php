@@ -16,6 +16,7 @@ interface PaginatorInterface
      * @param int $currentPageNumber Page number usually passed from the current request
      * @return mixed Collection of items returned by the slice callback @see setSliceCallback()
      * @throws \InvalidArgumentException
+     * @throws \AshleyDawson\SimplePagination\Exception\InvalidPageNumberException
      */
     public function paginate($currentPageNumber = 1);
 

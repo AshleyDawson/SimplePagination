@@ -73,4 +73,18 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(23, $this->paginator->getPagesInRange());
     }
+
+    public function testPaginateFailNotInteger()
+    {
+        $this->setExpectedException('\InvalidArgumentException');
+
+        $this->paginator->paginate('1');
+    }
+
+    public function testPaginateFailZeroPageNumber()
+    {
+        $this->setExpectedException('AshleyDawson\SimplePagination\Exception\InvalidPageNumberException');
+
+        $this->paginator->paginate(0);
+    }
 }

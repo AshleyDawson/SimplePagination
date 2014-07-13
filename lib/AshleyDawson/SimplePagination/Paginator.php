@@ -2,6 +2,8 @@
 
 namespace AshleyDawson\SimplePagination;
 
+use AshleyDawson\SimplePagination\Exception\InvalidPageNumberException;
+
 /**
  * Class Paginator
  *
@@ -40,16 +42,43 @@ class Paginator implements PaginatorInterface
                 sprintf('Current page number must be of type integer, %s given', gettype($currentPageNumber)));
         }
 
-        // todo: replace this exception with a specialised one
-        if ($currentPageNumber < 1) {
-            throw new \InvalidArgumentException(
+        if ($currentPageNumber <= 0) {
+            throw new InvalidPageNumberException(
                 sprintf('Current page number must have a value of 1 or more, %s given', $currentPageNumber));
         }
 
-        // todo: complete algorithm
+        $itemTotalCallback = $this->itemTotalCallback;
+        $totalNumberOfItems = (int)$itemTotalCallback();
+
+        $numberOfPages = (int)ceil($totalNumberOfItems / $this->itemsPerPage);
+
+        $pagesInRange = $this->pagesInRange;
+
+        if ($pagesInRange > $numberOfPages) {
+            $pagesInRange = $numberOfPages;
+        }
+
+        $delta = (int)ceil($pagesInRange / 2);
+
+        if ($currentPageNumber - $delta > $numberOfPages - $pagesInRange) {
+            $pages = range($numberOfPages - $pagesInRange + 1, $numberOfPages);
+        }
+        else {
+            if ($currentPageNumber - $delta < 0) {
+                $delta = $currentPageNumber;
+            }
+            $offset = $currentPageNumber - $delta;
+            $pages = range($offset + 1, $offset + $pagesInRange);
+        }
+
+        $limit = ($currentPageNumber - 1) * $this->itemsPerPage;
+
+        $sliceCallback = $this->sliceCallback;
+        $items = $sliceCallback($limit, $this->itemsPerPage);
+
+        // todo: finish algorithm
 
         // todo: check that callbacks return an iterable collection (e.g. array, \ArrayIterator, etc.)
-        // todo: maybe check that the count callback implements \Countable only?
     }
 
     /**
