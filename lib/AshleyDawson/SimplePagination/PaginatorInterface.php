@@ -13,8 +13,8 @@ interface PaginatorInterface
     /**
      * Run paginate algorithm using the current page number
      *
-     * @param int $currentPageNumber Page number usually passed from the current request
-     * @return mixed Collection of items returned by the slice callback @see setSliceCallback()
+     * @param int $currentPageNumber Page number, usually passed from the current request
+     * @return mixed Collection of items returned by the slice callback with pagination meta information
      * @throws \InvalidArgumentException
      * @throws \AshleyDawson\SimplePagination\Exception\InvalidPageNumberException
      */
