@@ -107,3 +107,65 @@ foreach ($pagination->getPages() as $page) {
 
 There are lots of other pieces of meta data held within the `$pagination` instance. These can be used for building
 first, last previous and next buttons.
+
+MySQL Example
+-------------
+
+Let's take the example above and use a MySQL result set instead of an array.
+
+```php
+use AshleyDawson\SimplePagination;
+
+// Instantiate a new paginator service
+$paginator = new Paginator();
+
+// Set some parameters
+$paginator
+    ->setItemsPerPage(10) // Give us a maximum of 10 items per page
+    ->setPagesInRange(5) // How many pages to display in navigation (e.g. if we have a lot of pages to get through)
+;
+
+// Pass our item total callback
+$paginator->setItemTotalCallback(function () {
+
+    // Run count query
+    $result = mysql_query("SELECT COUNT(*) FROM `TestData`");
+    
+    // Return the count (the value of the first result column), cast as an integer
+    return (int)mysql_result($result, 0);
+});
+
+// Pass our slice callback
+$paginator->setSliceCallback(function ($offset, $length) {
+    
+    // Run slice query
+    $result = mysql_query("SELECT `Name` FROM `TestData` LIMIT {$offset}, {$length}");
+    
+    // Build a collection of items
+    $collection = array();
+    while ($row = mysql_fetch_assoc($result)) {
+        $collection[] = $row;
+    }
+    
+    // Return the collection
+    return $collection;
+});
+
+// Paginate the item collection, passing the current page number (e.g. from the current request)
+$pagination = $paginator->paginate((int)$_GET['page']);
+
+// Ok, from here on is where we'd be inside a template of view (e.g. pass $pagination to your view)
+
+// Iterate over the items on this page
+foreach ($pagination->getItems() as $item) {
+    echo $item['Name'] . '<br />';
+}
+
+// Let's build a basic page navigation structure
+foreach ($pagination->getPages() as $page) {
+    echo '<a href="?page=' . $page . '">' . $page . '</a> ';
+}
+```
+
+It really doesn't matter what sort of collection you return from the Paginator::setSliceCallback() callback. It will
+always end up in Pagination::getItems().
