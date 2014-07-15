@@ -178,18 +178,18 @@ The result of the Paginator::paginate() operation is to produce a Pagination mod
 the current page plus the meta information for the collection, e.g. pages array, next page number, previous page number, etc.
 Please see below for a list of properties that the Pagination object has.
 
-* items:mixed
-* pages:array
-* totalNumberOfPages:int
-* currentPageNumber:int
-* firstPageNumber:int
-* lastPageNumber:int
-* previousPageNumber:int
-* nextPageNumber:int
-* itemsPerPage:int
-* totalNumberOfItems:int
-* firstPageNumberInRange:int
-* lastPageNumberInRange:int
+* **items** : mixed (Collection of items for the current page)
+* **pages** : array (Array of page numbers in the current range)
+* **totalNumberOfPages** : int (Total number of pages)
+* **currentPageNumber** : int (Current page number)
+* **firstPageNumber** : int (First page number)
+* **lastPageNumber** : int (Last page number)
+* **previousPageNumber** : int | null (Previous page number)
+* **nextPageNumber** : int | null (Next page number)
+* **itemsPerPage** : int (Number of items per page)
+* **totalNumberOfItems** : int (Total number of items)
+* **firstPageNumberInRange** : int (First page number in current range)
+* **lastPageNumberInRange** : int (Last page number in current range)
 
 A good example of using the Pagination object is to build a simple pagination navigation structure:
 
