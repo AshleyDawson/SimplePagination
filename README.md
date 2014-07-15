@@ -106,8 +106,23 @@ foreach ($pagination->getPages() as $page) {
 }
 ```
 
-There are lots of other pieces of meta data held within the `$pagination` instance. These can be used for building
+There are lots of other pieces of meta data held within the [pagination object]((#pagination-object)). These can be used for building
 first, last previous and next buttons.
+
+You can override the "items per page" and "pages in range" options at runtime by passing values to the paginator like this:
+ 
+```php
+// ...
+
+$paginator
+    ->setItemsPerPage(20)
+    ->setPagesInRange(5)
+;
+
+$pagination = $paginator->paginate((int)$this->get('request')->query->get('page', 1));
+
+// ...
+```
 
 MySQL Example
 -------------
@@ -171,8 +186,8 @@ foreach ($pagination->getPages() as $page) {
 It really doesn't matter what sort of collection you return from the Paginator::setSliceCallback() callback. It will
 always end up in Pagination::getItems().
 
-Pagination Model
-----------------
+<a name="pagination-object"></a>Pagination Object
+-------------------------------------------------
 
 The result of the Paginator::paginate() operation is to produce a Pagination model object, which carries the item collection for 
 the current page plus the meta information for the collection, e.g. pages array, next page number, previous page number, etc.
