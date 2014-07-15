@@ -3,7 +3,8 @@ Simple Pagination
 
 [![Build Status](https://travis-ci.org/AshleyDawson/SimplePagination.svg?branch=develop)](https://travis-ci.org/AshleyDawson/SimplePagination)
 
-Simple pagination library implements a paging interface on collections of things.
+Simple pagination library implements a paging interface on collections of things. If you'd like to 
+use the Simple Pagination within a Symfony 2 project then why not try my [Simple Pagination Bundle](https://github.com/AshleyDawson/SimplePaginationBundle)
 
 Installation
 ------------
