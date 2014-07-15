@@ -62,24 +62,23 @@ class Paginator implements PaginatorInterface
         $totalNumberOfItems = (int)$itemTotalCallback();
 
         $numberOfPages = (int)ceil($totalNumberOfItems / $this->itemsPerPage);
-
         $pagesInRange = $this->pagesInRange;
 
         if ($pagesInRange > $numberOfPages) {
             $pagesInRange = $numberOfPages;
         }
 
-        $delta = (int)ceil($pagesInRange / 2);
+        $change = (int)ceil($pagesInRange / 2);
 
-        if ($currentPageNumber - $delta > $numberOfPages - $pagesInRange) {
-            $pages = range($numberOfPages - $pagesInRange + 1, $numberOfPages);
+        if (($currentPageNumber - $change) > ($numberOfPages - $pagesInRange)) {
+            $pages = range(($numberOfPages - $pagesInRange) + 1, $numberOfPages);
         }
         else {
-            if ($currentPageNumber - $delta < 0) {
-                $delta = $currentPageNumber;
+            if (($currentPageNumber - $change) < 0) {
+                $change = $currentPageNumber;
             }
-            $offset = $currentPageNumber - $delta;
-            $pages = range($offset + 1, $offset + $pagesInRange);
+            $offset = $currentPageNumber - $change;
+            $pages = range(($offset + 1), $offset + $pagesInRange);
         }
 
         $offset = ($currentPageNumber - 1) * $this->itemsPerPage;
@@ -88,17 +87,16 @@ class Paginator implements PaginatorInterface
         $items = $sliceCallback($offset, $this->itemsPerPage);
 
         $previousPageNumber = null;
-        if ($currentPageNumber - 1 > 0) {
+        if (($currentPageNumber - 1) > 0) {
             $previousPageNumber = $currentPageNumber - 1;
         }
 
         $nextPageNumber = null;
-        if ($currentPageNumber + 1 <= $numberOfPages) {
+        if (($currentPageNumber + 1) <= $numberOfPages) {
             $nextPageNumber = $currentPageNumber + 1;
         }
 
         $pagination = new Pagination();
-
         $pagination
             ->setItems($items)
             ->setPages($pages)
