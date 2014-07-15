@@ -74,7 +74,7 @@ $items = array(
 // Instantiate a new paginator service
 $paginator = new Paginator();
 
-// Set some parameters
+// Set some parameters (optional)
 $paginator
     ->setItemsPerPage(10) // Give us a maximum of 10 items per page
     ->setPagesInRange(5) // How many pages to display in navigation (e.g. if we have a lot of pages to get through)
@@ -109,21 +109,6 @@ foreach ($pagination->getPages() as $page) {
 There are lots of other pieces of meta data held within the [pagination object](#pagination-object). These can be used for building
 first, last previous and next buttons.
 
-You can override the "items per page" and "pages in range" options at runtime by passing values to the paginator like this:
- 
-```php
-// ...
-
-$paginator
-    ->setItemsPerPage(20)
-    ->setPagesInRange(5)
-;
-
-$pagination = $paginator->paginate((int)$this->get('request')->query->get('page', 1));
-
-// ...
-```
-
 MySQL Example
 -------------
 
@@ -135,7 +120,7 @@ use AshleyDawson\SimplePagination\Paginator;
 // Instantiate a new paginator service
 $paginator = new Paginator();
 
-// Set some parameters
+// Set some parameters (optional)
 $paginator
     ->setItemsPerPage(10) // Give us a maximum of 10 items per page
     ->setPagesInRange(5) // How many pages to display in navigation (e.g. if we have a lot of pages to get through)
