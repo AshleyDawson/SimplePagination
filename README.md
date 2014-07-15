@@ -106,7 +106,7 @@ foreach ($pagination->getPages() as $page) {
 }
 ```
 
-There are lots of other pieces of meta data held within the [pagination object]((#pagination-object)). These can be used for building
+There are lots of other pieces of meta data held within the [pagination object](#pagination-object). These can be used for building
 first, last previous and next buttons.
 
 You can override the "items per page" and "pages in range" options at runtime by passing values to the paginator like this:
