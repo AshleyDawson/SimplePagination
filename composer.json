@@ -13,9 +13,7 @@
         "php": ">=5.3.3"
     },
     "require-dev": {
-        "phpunit/phpunit-mock-objects": "2.3.*@dev",
-        "phpunit/php-code-coverage": "3.0.*@dev",
-        "phpunit/phpunit": "4.3.*@dev"
+        "phpunit/phpunit": "4.3.*"
     },
     "autoload": {
         "psr-0": { "AshleyDawson\\SimplePagination\\": "lib/" }
