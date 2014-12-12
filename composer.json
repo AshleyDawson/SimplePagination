@@ -1,7 +1,7 @@
 {
     "name": "ashleydawson/simple-pagination",
     "type": "library",
-    "description": "Simple, lightweight and universal paginator that implements pagination on collections of things",
+    "description": "Simple, lightweight and universal service that implements pagination on collections of things",
     "keywords": ["pagination", "paginator", "pager", "simple", "easy", "flexible", "universal", "lite", "lightweight"],
     "authors": [
         {
