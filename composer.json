@@ -3,6 +3,7 @@
     "type": "library",
     "description": "Simple, lightweight and universal service that implements pagination on collections of things",
     "keywords": ["pagination", "paginator", "pager", "simple", "easy", "flexible", "universal", "lite", "lightweight"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Ashley Dawson",
