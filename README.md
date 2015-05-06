@@ -168,8 +168,9 @@ foreach ($pagination->getPages() as $page) {
 }
 ```
 
-It really doesn't matter what sort of collection you return from the Paginator::setSliceCallback() callback. It will
-always end up in Pagination::getItems().
+**Note:** The example above uses `mysql_connect()` etc. as I tried to make it as simple as possible. In the real world please use [PDO](http://php.net/manual/en/book.pdo.php), [Doctrine DBAL](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/), etc.
+
+It really doesn't matter what sort of collection you return from the Paginator::setSliceCallback() callback. It will always end up in Pagination::getItems().
 
 <a name="pagination-object"></a>Pagination Object
 -------------------------------------------------
