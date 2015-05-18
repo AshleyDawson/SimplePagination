@@ -92,6 +92,102 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->paginator->paginate(0);
     }
 
+    public function testPaginateLowVolumeConstructorConfig()
+    {
+        $items = range(0, 27);
+
+        $paginator = new Paginator(array(
+            'itemTotalCallback' => function () use ($items) {
+                return count($items);
+            },
+            'sliceCallback' => function ($offset, $length) use ($items) {
+                return array_slice($items, $offset, $length);
+            },
+            'itemsPerPage' => 10,
+            'pagesInRange' => 5,
+        ));
+
+        $pagination = $paginator->paginate(1);
+
+        $this->assertCount(10, $pagination->getItems());
+
+        $this->assertCount(3, $pagination->getPages());
+
+        $this->assertEquals(3, $pagination->getTotalNumberOfPages());
+
+        $this->assertEquals(1, $pagination->getCurrentPageNumber());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumber());
+
+        $this->assertEquals(3, $pagination->getLastPageNumber());
+
+        $this->assertNull($pagination->getPreviousPageNumber());
+
+        $this->assertEquals(2, $pagination->getNextPageNumber());
+
+        $this->assertEquals(10, $pagination->getItemsPerPage());
+
+        $this->assertEquals(28, $pagination->getTotalNumberOfItems());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumberInRange());
+
+        $this->assertEquals(3, $pagination->getLastPageNumberInRange());
+
+        // Increment page
+        $pagination = $paginator->paginate(2);
+
+        $this->assertCount(10, $pagination->getItems());
+
+        $this->assertCount(3, $pagination->getPages());
+
+        $this->assertEquals(3, $pagination->getTotalNumberOfPages());
+
+        $this->assertEquals(2, $pagination->getCurrentPageNumber());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumber());
+
+        $this->assertEquals(3, $pagination->getLastPageNumber());
+
+        $this->assertEquals(1, $pagination->getPreviousPageNumber());
+
+        $this->assertEquals(3, $pagination->getNextPageNumber());
+
+        $this->assertEquals(10, $pagination->getItemsPerPage());
+
+        $this->assertEquals(28, $pagination->getTotalNumberOfItems());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumberInRange());
+
+        $this->assertEquals(3, $pagination->getLastPageNumberInRange());
+
+        // Increment page
+        $pagination = $paginator->paginate(3);
+
+        $this->assertCount(8, $pagination->getItems());
+
+        $this->assertCount(3, $pagination->getPages());
+
+        $this->assertEquals(3, $pagination->getTotalNumberOfPages());
+
+        $this->assertEquals(3, $pagination->getCurrentPageNumber());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumber());
+
+        $this->assertEquals(3, $pagination->getLastPageNumber());
+
+        $this->assertEquals(2, $pagination->getPreviousPageNumber());
+
+        $this->assertNull($pagination->getNextPageNumber());
+
+        $this->assertEquals(10, $pagination->getItemsPerPage());
+
+        $this->assertEquals(28, $pagination->getTotalNumberOfItems());
+
+        $this->assertEquals(1, $pagination->getFirstPageNumberInRange());
+
+        $this->assertEquals(3, $pagination->getLastPageNumberInRange());
+    }
+
     public function testPaginateLowVolume()
     {
         $items = range(0, 27);

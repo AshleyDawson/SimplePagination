@@ -34,7 +34,7 @@ describe the operation of Simple Pagination. These are:
 * Pagination model
 
 The **Paginator** service performs the pagination algorithm, generating the page range and item collection slices.
-When it's done it will return a **Pagination** model filled with the item collection slice and meta information.
+When it's done it will return a **Pagination** object filled with the item collection slice and metadata.
 
 The two main operations the **Paginator** service will perform on your collection (or data set) are denoted by two
 callback methods passed to the **Paginator** service. The first one is the **Item total callback**. This callback is
@@ -44,7 +44,7 @@ used to determine the total number of items in your collection (returned as an i
 The idea behind using these callbacks is so that Simple Pagination is kept, well, simple! The real power comes with
 the flexibility. You can use Simple Pagination with just about any collection you want. From simple arrays to database
 lists to [Doctrine](http://www.doctrine-project.org/) collections to [Solr](http://lucene.apache.org/solr/) result 
-sets - we're got you covered! It really doesn't matter what we paginate - as long as it's a collection of things and you 
+sets - we've got you covered! It really doesn't matter what we paginate - as long as it's a collection of things and you 
 can count and slice it.
 
 Basic Usage
@@ -170,6 +170,24 @@ foreach ($pagination->getPages() as $page) {
 
 It really doesn't matter what sort of collection you return from the Paginator::setSliceCallback() callback. It will
 always end up in Pagination::getItems().
+
+Constructor Configuration
+-------------------------
+
+You can also configure the paginator with a configuration array passed to the constructor. For example:
+
+```php
+$paginator = new Paginator(array(
+    'itemTotalCallback' => function () {
+        // ...
+    },
+    'sliceCallback' => function ($offset, $length) {
+        // ...
+    },
+    'itemsPerPage' => 10,
+    'pagesInRange' => 5
+));
+```
 
 <a name="pagination-object"></a>Pagination Object
 -------------------------------------------------

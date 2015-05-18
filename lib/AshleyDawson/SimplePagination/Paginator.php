@@ -34,6 +34,34 @@ class Paginator implements PaginatorInterface
     private $pagesInRange = 5;
 
     /**
+     * Constructor - passing optional configuration
+     *
+     * <code>
+     * $paginator = new Paginator(array(
+     *     'itemTotalCallback' => function () {
+     *         // ...
+     *     },
+     *     'sliceCallback' => function ($offset, $length) {
+     *         // ...
+     *     },
+     *     'itemsPerPage' => 10,
+     *     'pagesInRange' => 5
+     * ));
+     * </code>
+     *
+     * @param array|null $config
+     */
+    public function __construct(array $config = null)
+    {
+        if (is_array($config)) {
+            $this->setItemTotalCallback($config['itemTotalCallback']);
+            $this->setSliceCallback($config['sliceCallback']);
+            $this->setItemsPerPage($config['itemsPerPage']);
+            $this->setPagesInRange($config['pagesInRange']);
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function paginate($currentPageNumber = 1)
