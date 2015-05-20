@@ -8,17 +8,17 @@ namespace AshleyDawson\SimplePagination;
  * @package AshleyDawson\SimplePagination
  * @author Ashley Dawson <ashley@ashleydawson.co.uk>
  */
-class Pagination
+class Pagination implements \IteratorAggregate, \Countable
 {
     /**
      * @var mixed
      */
-    private $items;
+    private $items = array();
 
     /**
      * @var array
      */
-    private $pages;
+    private $pages = array();
 
     /**
      * @var int
@@ -332,5 +332,21 @@ class Pagination
     {
         $this->totalNumberOfPages = $totalNumberOfPages;
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->items);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->items);
     }
 }

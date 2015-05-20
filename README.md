@@ -91,7 +91,7 @@ $paginator->setSliceCallback(function ($offset, $length) use ($items) {
 });
 
 // Paginate the item collection, passing the current page number (e.g. from the current request)
-$pagination = $paginator->paginate((int)$_GET['page']);
+$pagination = $paginator->paginate((int) $_GET['page']);
 
 // Ok, from here on is where we'd be inside a template of view (e.g. pass $pagination to your view)
 
@@ -153,7 +153,7 @@ $paginator->setSliceCallback(function ($offset, $length) {
 });
 
 // Paginate the item collection, passing the current page number (e.g. from the current request)
-$pagination = $paginator->paginate((int)$_GET['page']);
+$pagination = $paginator->paginate((int) $_GET['page']);
 
 // Ok, from here on is where we'd be inside a template of view (e.g. pass $pagination to your view)
 
@@ -188,6 +188,20 @@ $paginator = new Paginator(array(
     'itemsPerPage' => 10,
     'pagesInRange' => 5
 ));
+```
+
+Pagination as an Iterator
+-------------------------
+
+The Pagination object returned from the Paginator service implements \IteratorAggregate and \Countable so you can do things like this in your view:
+
+```php
+if (count($pagination) > 0)
+{
+    foreach ($pagination as $item) {
+        echo $item . '<br />';
+    }
+}
 ```
 
 <a name="pagination-object"></a>Pagination Object
