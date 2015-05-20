@@ -188,6 +188,38 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $pagination->getLastPageNumberInRange());
     }
 
+    public function testPaginationIteratorAggregate()
+    {
+        $items = range(0, 27);
+
+        $paginator = new Paginator(array(
+            'itemTotalCallback' => function () use ($items) {
+                return count($items);
+            },
+            'sliceCallback' => function ($offset, $length) use ($items) {
+                return array_slice($items, $offset, $length);
+            },
+            'itemsPerPage' => 15,
+            'pagesInRange' => 5,
+        ));
+
+        $pagination = $paginator->paginate(1);
+
+        $this->assertInstanceOf('\IteratorAggregate', $pagination);
+
+        $this->assertInstanceOf('\Countable', $pagination);
+
+        $this->assertCount(15, $pagination);
+
+        $iterations = 0;
+        foreach ($pagination as $i => $item) {
+            $this->assertEquals($i, $item);
+            $iterations ++;
+        }
+
+        $this->assertEquals(15, $iterations);
+    }
+
     public function testPaginateLowVolume()
     {
         $items = range(0, 27);
