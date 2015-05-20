@@ -133,7 +133,7 @@ $paginator->setItemTotalCallback(function () {
     $result = mysql_query("SELECT COUNT(*) FROM `TestData`");
     
     // Return the count (the value of the first result column), cast as an integer
-    return (int)mysql_result($result, 0);
+    return (int) mysql_result($result, 0);
 });
 
 // Pass our slice callback
@@ -195,8 +195,7 @@ Pagination as an Iterator
 The Pagination object returned from the Paginator service implements \IteratorAggregate and \Countable so you can do things like this in your view:
 
 ```php
-if (count($pagination) > 0)
-{
+if (count($pagination) > 0) {
     foreach ($pagination as $item) {
         echo $item . '<br />';
     }
