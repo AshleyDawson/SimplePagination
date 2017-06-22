@@ -228,12 +228,12 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->paginator->setItemsPerPage(10)->setPagesInRange(5);
 
         $this->paginator->setItemTotalCallback(function (Pagination $pagination) use ($items) {
-            $pagination->setMeta(['meta_1']);
+            $pagination->setMeta(array('meta_1'));
             return count($items);
         });
 
         $this->paginator->setSliceCallback(function ($offset, $length, Pagination $pagination) use ($items) {
-            $pagination->setMeta(array_merge($pagination->getMeta(), ['meta_2']));
+            $pagination->setMeta(array_merge($pagination->getMeta(), array('meta_2')));
             return array_slice($items, $offset, $length);
         });
 
@@ -333,12 +333,12 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->paginator->setItemsPerPage(10)->setPagesInRange(5);
 
         $this->paginator->setItemTotalCallback(function (Pagination $pagination) use ($items) {
-            $pagination->setMeta(['meta_3']);
+            $pagination->setMeta(array('meta_3'));
             return count($items);
         });
 
         $this->paginator->setSliceCallback(function ($offset, $length, Pagination $pagination) use ($items) {
-            $pagination->setMeta(array_merge($pagination->getMeta(), ['meta_4']));
+            $pagination->setMeta(array_merge($pagination->getMeta(), array('meta_4')));
             return array_slice($items, $offset, $length);
         });
 
