@@ -86,8 +86,10 @@ class Paginator implements PaginatorInterface
                 sprintf('Current page number must have a value of 1 or more, %s given', $currentPageNumber));
         }
 
+        $pagination = new Pagination();
+
         $itemTotalCallback = $this->itemTotalCallback;
-        $totalNumberOfItems = (int)$itemTotalCallback();
+        $totalNumberOfItems = (int)$itemTotalCallback($pagination);
 
         $numberOfPages = (int)ceil($totalNumberOfItems / $this->itemsPerPage);
         $pagesInRange = $this->pagesInRange;
@@ -112,7 +114,7 @@ class Paginator implements PaginatorInterface
         $offset = ($currentPageNumber - 1) * $this->itemsPerPage;
 
         $sliceCallback = $this->sliceCallback;
-        $items = $sliceCallback($offset, $this->itemsPerPage);
+        $items = $sliceCallback($offset, $this->itemsPerPage, $pagination);
 
         $previousPageNumber = null;
         if (($currentPageNumber - 1) > 0) {
@@ -124,7 +126,6 @@ class Paginator implements PaginatorInterface
             $nextPageNumber = $currentPageNumber + 1;
         }
 
-        $pagination = new Pagination();
         $pagination
             ->setItems($items)
             ->setPages($pages)

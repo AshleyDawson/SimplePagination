@@ -71,6 +71,11 @@ class Pagination implements \IteratorAggregate, \Countable
     private $lastPageNumberInRange;
 
     /**
+     * @var mixed
+     */
+    private $meta;
+
+    /**
      * Get items
      *
      * @return mixed
@@ -348,5 +353,25 @@ class Pagination implements \IteratorAggregate, \Countable
     public function count()
     {
         return count($this->items);
+    }
+
+    /**
+     * Get meta
+     *
+     * @return mixed
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @param mixed $meta
+     * @return Pagination
+     */
+    public function setMeta($meta)
+    {
+        $this->meta = $meta;
+        return $this;
     }
 }

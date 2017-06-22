@@ -203,6 +203,43 @@ if (count($pagination) > 0) {
 }
 ```
 
+Arbitrary Pagination Metadata
+-----------------------------
+
+During both item total and slice callbacks you have the option of passing arbitrary metadata to the pagination object. This is an optional feature
+and is useful if you have a use-case where additional data is returned by these operations and you want to access it from the pagination object whilst listing
+the items. A good example of this is when using search engines such as [ElasticSearch](https://www.elastic.co/), you can pass back secondary information - like 
+aggregations, etc. A generic example can be seen below:
+
+```php
+
+use AshleyDawson\SimplePagination\Pagination;
+
+// ...
+
+$paginator->setItemTotalCallback(function (Pagination $pagination) use ($items) {
+    // Pass arbitrary metadata to pagination object
+    $pagination->setMeta(['my', 'meta', 'data']);
+    
+    return count($items);
+});
+
+$paginator->setSliceCallback(function ($offset, $length, Pagination $pagination) use ($items) {
+    // Pass more arbitrary metadata to pagination object
+    $pagination->setMeta(array_merge($pagination->getMeta(), ['more', 'stuff']));
+
+    return array_slice($items, $offset, $length);
+});
+
+// ...
+
+// Perform the pagination
+$pagination = $paginator->paginate((int) $_GET['page']);
+
+// Get the metadata from the pagination object
+var_dump($pagination->getMeta());
+```
+
 <a name="pagination-object"></a>Pagination Object
 -------------------------------------------------
 

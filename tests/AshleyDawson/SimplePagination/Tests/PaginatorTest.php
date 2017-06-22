@@ -2,6 +2,7 @@
 
 namespace AshleyDawson\SimplePagination\Tests;
 
+use AshleyDawson\SimplePagination\Pagination;
 use AshleyDawson\SimplePagination\Paginator;
 
 class PaginatorTest extends \PHPUnit_Framework_TestCase
@@ -226,15 +227,20 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
 
         $this->paginator->setItemsPerPage(10)->setPagesInRange(5);
 
-        $this->paginator->setItemTotalCallback(function () use ($items) {
+        $this->paginator->setItemTotalCallback(function (Pagination $pagination) use ($items) {
+            $pagination->setMeta(['meta_1']);
             return count($items);
         });
 
-        $this->paginator->setSliceCallback(function ($offset, $length) use ($items) {
+        $this->paginator->setSliceCallback(function ($offset, $length, Pagination $pagination) use ($items) {
+            $pagination->setMeta(array_merge($pagination->getMeta(), ['meta_2']));
             return array_slice($items, $offset, $length);
         });
 
         $pagination = $this->paginator->paginate(1);
+
+        $this->assertContains('meta_1', $pagination->getMeta());
+        $this->assertContains('meta_2', $pagination->getMeta());
 
         $this->assertCount(10, $pagination->getItems());
 
@@ -313,25 +319,33 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $pagination->getFirstPageNumberInRange());
 
         $this->assertEquals(3, $pagination->getLastPageNumberInRange());
+
+        $this->assertContains('meta_1', $pagination->getMeta());
+        $this->assertContains('meta_2', $pagination->getMeta());
     }
 
     public function testPaginateHighVolume()
     {
-        // CAUTION: This test consumes a large amount of memory (~50Mb)
+        // CAUTION: This test consumes a large amount of memory (~50Mb) in PHP 5
 
         $items = range(0, 293832);
 
         $this->paginator->setItemsPerPage(10)->setPagesInRange(5);
 
-        $this->paginator->setItemTotalCallback(function () use ($items) {
+        $this->paginator->setItemTotalCallback(function (Pagination $pagination) use ($items) {
+            $pagination->setMeta(['meta_3']);
             return count($items);
         });
 
-        $this->paginator->setSliceCallback(function ($offset, $length) use ($items) {
+        $this->paginator->setSliceCallback(function ($offset, $length, Pagination $pagination) use ($items) {
+            $pagination->setMeta(array_merge($pagination->getMeta(), ['meta_4']));
             return array_slice($items, $offset, $length);
         });
 
         $pagination = $this->paginator->paginate(1);
+
+        $this->assertContains('meta_3', $pagination->getMeta());
+        $this->assertContains('meta_4', $pagination->getMeta());
 
         $this->assertCount(10, $pagination->getItems());
 
@@ -410,5 +424,8 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(29380, $pagination->getFirstPageNumberInRange());
 
         $this->assertEquals(29384, $pagination->getLastPageNumberInRange());
+
+        $this->assertContains('meta_3', $pagination->getMeta());
+        $this->assertContains('meta_4', $pagination->getMeta());
     }
 }
