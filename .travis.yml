@@ -11,5 +11,4 @@ php:
 script:
   - composer self-update
   - composer install --no-dev
-  - phpunit --coverage-text
-
+  - bin/phpunit --coverage-text
