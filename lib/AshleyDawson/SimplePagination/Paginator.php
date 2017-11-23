@@ -114,7 +114,12 @@ class Paginator implements PaginatorInterface
         $offset = ($currentPageNumber - 1) * $this->itemsPerPage;
 
         $sliceCallback = $this->sliceCallback;
-        $items = $sliceCallback($offset, $this->itemsPerPage, $pagination);
+
+        if (-1 === $this->itemsPerPage) {
+            $items = $sliceCallback(0, 99999999, $pagination);
+        } else {
+            $items = $sliceCallback($offset, $this->itemsPerPage, $pagination);
+        }
 
         $previousPageNumber = null;
         if (($currentPageNumber - 1) > 0) {
