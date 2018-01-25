@@ -240,6 +240,23 @@ $pagination = $paginator->paginate((int) $_GET['page']);
 var_dump($pagination->getMeta());
 ```
 
+Pre and Post Query Callbacks
+----------------------------
+
+Before and after the count and slice queries, you can set callbacks to fire. To set them, do the following:
+
+```php
+$paginator->setBeforeQueryCallback(function (Paginator $paginator, Pagination $pagination) {
+
+});
+
+$paginator->setAfterQueryCallback(function (Paginator $paginator, Pagination $pagination) {
+
+});
+```
+
+This is handy if you want to perform some function before and after each query is made.
+
 <a name="pagination-object"></a>Pagination Object
 -------------------------------------------------
 
