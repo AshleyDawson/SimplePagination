@@ -93,6 +93,40 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->paginator->paginate(0);
     }
 
+    public function testBeforeAndAfterQueryCallbacks()
+    {
+        $items = range(0, 27);
+
+        $paginator = new Paginator(array(
+            'itemTotalCallback' => function () use ($items) {
+                return count($items);
+            },
+            'sliceCallback' => function ($offset, $length) use ($items) {
+                return array_slice($items, $offset, $length);
+            },
+            'itemsPerPage' => 10,
+            'pagesInRange' => 5,
+        ));
+
+        $beforeQueryFired = false;
+        $paginator->setBeforeQueryCallback(function () use (&$beforeQueryFired) {
+            $beforeQueryFired = true;
+        });
+
+        $afterQueryFired = false;
+        $paginator->setAfterQueryCallback(function () use (&$afterQueryFired) {
+            $afterQueryFired = true;
+        });
+
+        $this->assertFalse($beforeQueryFired);
+        $this->assertFalse($afterQueryFired);
+
+        $paginator->paginate(1);
+
+        $this->assertTrue($beforeQueryFired);
+        $this->assertTrue($afterQueryFired);
+    }
+
     public function testPaginateLowVolumeConstructorConfig()
     {
         $items = range(0, 27);

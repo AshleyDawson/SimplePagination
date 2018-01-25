@@ -51,6 +51,26 @@ interface PaginatorInterface
     public function setItemTotalCallback(\Closure $itemTotalCallback);
 
     /**
+     * @return \Closure
+     */
+    public function getBeforeQueryCallback();
+
+    /**
+     * @param \Closure $beforeQueryCallback
+     */
+    public function setBeforeQueryCallback($beforeQueryCallback);
+
+    /**
+     * @return \Closure
+     */
+    public function getAfterQueryCallback();
+
+    /**
+     * @param \Closure $afterQueryCallback
+     */
+    public function setAfterQueryCallback($afterQueryCallback);
+
+    /**
      * Get itemsPerPage
      *
      * @return int

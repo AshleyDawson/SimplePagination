@@ -24,6 +24,16 @@ class Paginator implements PaginatorInterface
     private $sliceCallback;
 
     /**
+     * @var \Closure
+     */
+    private $beforeQueryCallback;
+
+    /**
+     * @var \Closure
+     */
+    private $afterQueryCallback;
+
+    /**
      * @var int
      */
     private $itemsPerPage = 10;
@@ -86,10 +96,23 @@ class Paginator implements PaginatorInterface
                 sprintf('Current page number must have a value of 1 or more, %s given', $currentPageNumber));
         }
 
+        $beforeQueryCallback = $this->beforeQueryCallback instanceof \Closure
+            ? $this->beforeQueryCallback
+            : function () {}
+        ;
+
+        $afterQueryCallback = $this->afterQueryCallback instanceof \Closure
+            ? $this->afterQueryCallback
+            : function () {}
+        ;
+
         $pagination = new Pagination();
 
         $itemTotalCallback = $this->itemTotalCallback;
+
+        $beforeQueryCallback($this, $pagination);
         $totalNumberOfItems = (int)$itemTotalCallback($pagination);
+        $afterQueryCallback($this, $pagination);
 
         $numberOfPages = (int)ceil($totalNumberOfItems / $this->itemsPerPage);
         $pagesInRange = $this->pagesInRange;
@@ -115,11 +138,13 @@ class Paginator implements PaginatorInterface
 
         $sliceCallback = $this->sliceCallback;
 
+        $beforeQueryCallback($this, $pagination);
         if (-1 === $this->itemsPerPage) {
-            $items = $sliceCallback(0, 99999999, $pagination);
+            $items = $sliceCallback(0, 999999999, $pagination);
         } else {
             $items = $sliceCallback($offset, $this->itemsPerPage, $pagination);
         }
+        $afterQueryCallback($this, $pagination);
 
         $previousPageNumber = null;
         if (($currentPageNumber - 1) > 0) {
@@ -172,6 +197,38 @@ class Paginator implements PaginatorInterface
     public function getItemTotalCallback()
     {
         return $this->itemTotalCallback;
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function getBeforeQueryCallback()
+    {
+        return $this->beforeQueryCallback;
+    }
+
+    /**
+     * @param \Closure $beforeQueryCallback
+     */
+    public function setBeforeQueryCallback($beforeQueryCallback)
+    {
+        $this->beforeQueryCallback = $beforeQueryCallback;
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function getAfterQueryCallback()
+    {
+        return $this->afterQueryCallback;
+    }
+
+    /**
+     * @param \Closure $afterQueryCallback
+     */
+    public function setAfterQueryCallback($afterQueryCallback)
+    {
+        $this->afterQueryCallback = $afterQueryCallback;
     }
 
     /**
