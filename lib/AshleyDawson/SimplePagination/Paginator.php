@@ -200,7 +200,7 @@ class Paginator implements PaginatorInterface
     }
 
     /**
-     * @return \Closure
+     * {@inheritdoc}
      */
     public function getBeforeQueryCallback()
     {
@@ -208,15 +208,16 @@ class Paginator implements PaginatorInterface
     }
 
     /**
-     * @param \Closure $beforeQueryCallback
+     * {@inheritdoc}
      */
     public function setBeforeQueryCallback($beforeQueryCallback)
     {
         $this->beforeQueryCallback = $beforeQueryCallback;
+        return $this;
     }
 
     /**
-     * @return \Closure
+     * {@inheritdoc}
      */
     public function getAfterQueryCallback()
     {
@@ -224,11 +225,12 @@ class Paginator implements PaginatorInterface
     }
 
     /**
-     * @param \Closure $afterQueryCallback
+     * {@inheritdoc}
      */
     public function setAfterQueryCallback($afterQueryCallback)
     {
         $this->afterQueryCallback = $afterQueryCallback;
+        return $this;
     }
 
     /**
