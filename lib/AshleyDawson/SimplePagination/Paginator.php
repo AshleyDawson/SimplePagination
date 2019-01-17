@@ -144,6 +144,9 @@ class Paginator implements PaginatorInterface
         } else {
             $items = $sliceCallback($offset, $this->itemsPerPage, $pagination);
         }
+        if ($items instanceof \Iterator) {
+            $items = iterator_to_array($items);   
+        }
         $afterQueryCallback($this, $pagination);
 
         $previousPageNumber = null;
